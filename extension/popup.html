@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/style.css">
+	</head>
+	<body>
+
+		<div class="container" style="padding-top:1em; min-width: 500px;">
+			<div class="row justify-content-md-center">
+				<div class="col-lg-8 col-md-10">
+					<div id="navArea">
+						<div class="clearfix"></div>
+						<h5 class="page-title text-left float-left">Response Manager</h5>
+						<button id="addNewBtn" type="button" class="add-new-message btn btn-primary btn-sm float-right">+ Add New</button>
+						<span id="discardNewTemplate" class=" float-right hidden"><svg width="35" height="35" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><defs><style>.vi-primary {fill: #FF6E6E;}.vi-primary, .vi-accent {fill-rule: evenodd;}.vi-accent {fill: #0C0058;}</style></defs><path class="vi-primary" d="M35,32l-3,3-7.5-7.5L17,35l-3-3,7.5-7.5L14,17l3-3,7.5,7.5L32,14l3,3-7.5,7.5Z"/><path class="vi-accent" d="m20 32-3 3-3-3 3-3zm15-15-3 3-3-3 3-3zm-6 15 3 3 3-3-3-3zm-15-15 3 3 3-3-3-3z"/></svg></span>
+						<div class="clearfix"></div>
+					</div>
+					<div id="itemsContainer" class="masked">
+						<div id="existingTemplates">
+							<div id="noItems" class="alert alert-secondary" role="alert">
+							  You have no saved response templates yet! <a class="add-new-message" href="#">Get started!</a>
+							</div>
+							<div id="items" class="my-3 p-3 bg-white rounded shadow-sm hidden">
+							    <h6 class="border-bottom border-gray pb-2 mb-0">Available responses</h6>
+									<div id="savedMessages"></div>
+									<div class="template-item media text-muted pt-3 hidden" data-key="{key}" data-message="{message}">
+							      <svg class="bd-placeholder-img mr-2 rounded" width="5" height="50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#ffb299"></rect><text x="50%" y="50%" fill="#ffb299" dy=".3em">32x32</text></svg>
+							      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+							        <div class="d-flex justify-content-between align-items-center w-100">
+												<strong class="response-title text-gray-dark float-left">{title}</strong>
+							          <span class="response-browser-actions float-right"><a class="insert-response" data-type="copy" href="#">Copy</a> | <a class="insert-response disabled" data-type="add" href="#">Add</a></span>
+											</div>
+							        <div class="d-block">
+												<div class="btn-group response-action-btns" role="group" aria-label="Response Actions">
+												  <button id="editTemplate" type="button" class="btn btn-info btn-sm">Edit</button>
+												  <button id="deleteTemplate" type="button" class="btn btn-danger btn-sm">Delete</button>
+												</div>
+											</div>
+							      </div>
+							    </div>
+
+							  </div>
+						</div>
+
+						<div id="newTemplate" class="hidden">
+							<form data-id="0">
+								<div class="form-group">
+							    <label for="templateTitle">Title</label>
+							    <input type="text" class="form-control" id="templateTitle" placeholder="Title">
+									<small id="titleHelpInline" class="text-muted">
+							      Short title to indicate the message use case(s).
+							    </small>
+							  </div>
+							  <div class="form-group">
+							    <label for="templateResponse">Response Text</label>
+									<textarea class="form-control" id="templateResponse" rows="3" placeholder="Response body"></textarea>
+									<small id="responseHelpInline" class="text-muted">
+							      Your template response message.
+							    </small>
+							  </div>
+								<button id="saveNewTemplate" class="btn btn-primary btn-sm" type="submit">Save</button>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="assets/js/jquery-2.2.4.min.js"></script>
+		<script src="assets/js/responses-manager.js"></script>
+	</body>
+</html>

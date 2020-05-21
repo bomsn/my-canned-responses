@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "My Canned Responses",
+  "version": "0.2",
+  "author": "Ali Khallad",
+  "description": "Create and manage your response templates easily.",
+  "permissions": [ "storage" ],
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "24": "assets/icons/icon24.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "content_scripts": [{
+      "matches": [
+        "*://app.codeable.io/tasks/*",
+        "*://outlook.live.com/mail/*",
+        "*://mail.google.com/*"
+      ],
+      "js": ["assets/js/content.js"]
+    }],
+  "browser_action": {
+    "default_icon": "assets/icons/icon48.png",
+    "default_popup": "popup.html",
+    "default_title": "Responses Manager"
+  }
+}

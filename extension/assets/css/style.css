@@ -1,0 +1,78 @@
+#navArea{
+  border-bottom: 1px solid #f3f3f3;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+#discardNewTemplate{
+  cursor: pointer;
+}
+#discardNewTemplate:hover{
+  opacity: 0.6;
+}
+#itemsContainer {
+  padding-bottom: 20px;
+}
+.masked {
+  position: relative;
+}
+.masked:before {
+  content: '';
+  position: absolute;
+  left: -1%;
+  top: 0;
+  width: 102%;
+  height: 102%;
+  background: #fff;
+  z-index: 99;
+}
+.hidden{
+  display: none;
+}
+.page-title{
+  line-height: 31px;
+  margin: 0px;
+}
+.response-title{
+  margin-bottom: 10px;
+}
+.response-browser-actions {
+    font-size: 12px;
+}
+.response-browser-actions a {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.response-browser-actions a.disabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.response-action-btns button{
+  padding: .200rem .5rem;
+  font-size: .675rem;
+  line-height: 1;
+  height: auto;
+}
+
+
+
+#items {
+    max-height: 425px;
+    overflow: auto;
+}
+/*
+* Scroll bar customization for other browsers
+*/
+#items::-webkit-scrollbar-track{
+  background-color: #f1f1f1;
+}
+
+#items::-webkit-scrollbar{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#items::-webkit-scrollbar-thumb{
+  background-color: #ffb299;
+}

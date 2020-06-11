@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "My Canned Responses",
-  "version": "0.2",
+  "version": "0.3",
   "author": "Ali Khallad",
   "description": "Create and manage your response templates easily.",
   "permissions": [ "storage" ],

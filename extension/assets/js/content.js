@@ -21,17 +21,42 @@ chrome.runtime.onMessage.addListener(
 
       }else if( domain.indexOf("mail.google.com/") !== -1 ){
 
-        textArea = document.getElementsByClassName('gmail_default')[0];
-        if( typeof(textArea) != 'undefined' && textArea != null && textArea != '' ){
-          textArea.innerHTML = textArea.innerHTML !== '' ? textArea.innerHTML + '\n\n' + request.message : request.message;
+        textArea = document.querySelectorAll('[contenteditable].editable');
+
+        if( typeof(textArea) != 'undefined' && textArea != null && textArea != '' && textArea.length > 0 ){
+
+          let cannedReply = document.createElement("div"),
+              lastTextArea = textArea[textArea.length- 1],
+              gmailQuote = lastTextArea.querySelectorAll('.gmail_quote');
+
+          // Assign the reply to an element
+          cannedReply.innerHTML = request.message;
+
+          if( gmailQuote.length > 0 ){
+            lastTextArea.insertBefore(cannedReply, gmailQuote[0])
+          }else{
+            lastTextArea.appendChild(cannedReply);
+          }
+
           added = true;
         }
 
       }else if( domain.indexOf("outlook.live.com/") !== -1 ){
 
-        textArea = document.querySelectorAll('[aria-label="Message body"]')[0];
-        if( typeof(textArea) != 'undefined' && textArea != null && textArea != '' ){
-          textArea.innerHTML = textArea.innerHTML !== '' ? textArea.innerHTML + '\n' + request.message : request.message;
+        textArea = document.querySelectorAll('[contenteditable]');
+        if( typeof(textArea) != 'undefined' && textArea != null && textArea != '' && textArea.length > 0 ){
+          let cannedReply = document. createElement("div"),
+              lastTextArea = textArea[textArea.length- 1],
+              outlookQuote = lastTextArea.querySelectorAll('#appendonsend');
+
+          // Assign the reply to an element
+          cannedReply.innerHTML = request.message;
+
+          if( outlookQuote.length > 0 ){
+            lastTextArea.insertBefore(cannedReply, outlookQuote[0])
+          }else{
+            lastTextArea.appendChild(cannedReply);
+          }
           added = true;
         }
 

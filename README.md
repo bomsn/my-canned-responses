@@ -13,6 +13,8 @@ Never send canned replies without change, if used improperly, they can make user
 
 _____________________________________________
 
-My Website: https://wpali.com
+### Have an issue or suggestion?
+Feel free to share any issues or feature requests by creating an [issue](https://github.com/bomsn/my-canned-responses/issues)
 
-My Codeable Profile: https://wpali.com/codeable
+### Want to contribute?
+Fork, change, send pull request!

@@ -265,7 +265,7 @@
     $(itemsContainer).removeClass('masked');
   }
   function runDomainProcesses(){
-    var hostname = domain.hostname;
+    let hostname = domain.hostname;
     if(
       hostname == 'app.codeable.io' ||
       hostname == 'mail.google.com' ||
@@ -277,11 +277,14 @@
   function getDomain(){
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      var activeTab = tabs[0];
+      let activeTab = tabs[0];
       chrome.tabs.sendMessage(activeTab.id, {"action": 'getURL'}, function(location){
-        var url = new URL(location);
-        domain = url;
-        runDomainProcesses();
+        console.log(chrome.runtime.lastError);
+        if( ! chrome.runtime.lastError ) {
+          let url = new URL(location);
+          domain = url;
+          runDomainProcesses();
+        }
       });
     });
 

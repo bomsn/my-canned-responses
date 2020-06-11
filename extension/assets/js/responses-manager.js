@@ -52,7 +52,7 @@
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           var activeTab = tabs[0]
               action = type == 'add' ? 'addReply' : type ;
-          chrome.tabs.sendMessage(activeTab.id, {"action": action, "message": message, "domain": domain});
+          chrome.tabs.sendMessage(activeTab.id, {"action": action, "message": message});
         });
       }
 

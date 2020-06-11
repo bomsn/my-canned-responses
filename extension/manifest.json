@@ -24,5 +24,11 @@
     "default_icon": "assets/icons/icon48.png",
     "default_popup": "popup.html",
     "default_title": "Responses Manager"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ali@kholi.com",
+      "strict_min_version": "42.0"
+    }
   }
 }

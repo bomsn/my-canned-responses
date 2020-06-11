@@ -1,5 +1,5 @@
 // content.js
-chrome.runtime.onMessage.addListener(
+browser.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
 
     if( request.action === 'getURL' ){
@@ -63,7 +63,9 @@ chrome.runtime.onMessage.addListener(
       }
 
       if( !added ){
-        alert('You response couldn\'t be added.');
+        sendResponse( false );
+      }else{
+        sendResponse( true );
       }
     }
   }

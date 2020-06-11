@@ -1,5 +1,6 @@
 // response-manager.js
 (function ($) {
+
   // Get the data
   var data = [],
       domain = '';
@@ -48,12 +49,18 @@
       if( type == 'copy' ){
         copyToClipboard( message );
       }else{
+
         // Supply the message to the page
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          var activeTab = tabs[0]
-              action = type == 'add' ? 'addReply' : type ;
-          chrome.tabs.sendMessage(activeTab.id, {"action": action, "message": message, "domain": domain});
+        browser.tabs.query({currentWindow: true, active : true}).then( function(tabs){
+          let activeTab = tabs[0];
+          let action = type == 'add' ? 'addReply' : type ;
+          browser.tabs.sendMessage(activeTab.id, {"action": action, "message": message}).then( function(response){
+              if( ! response ){
+                alert('You response couldn\'t be added.');
+              }
+          });
         });
+
       }
 
   });
@@ -275,23 +282,21 @@
     }
   }
   function getDomain(){
-
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    browser.tabs.query({currentWindow: true, active : true}).then( function(tabs){
       let activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, {"action": 'getURL'}, function(location){
-        console.log(chrome.runtime.lastError);
-        if( ! chrome.runtime.lastError ) {
-          let url = new URL(location);
-          domain = url;
-          runDomainProcesses();
-        }
-      });
+      browser.tabs.sendMessage(activeTab.id, {"action": 'getURL'}).then( function(location){
+            console.log(browser.runtime.lastError);
+            if( ! browser.runtime.lastError ) {
+              let url = new URL(location);
+              domain = url;
+              runDomainProcesses();
+            }
+          });
     });
-
   }
   function getData(){
     // Get and assign Data from the storage
-    chrome.storage.sync.get(["messages"], function(items){
+    browser.storage.sync.get("messages").then(function(items){
       if( items.messages !== undefined && items.messages.length > 0 ){
         data = items.messages;
       }
@@ -301,7 +306,7 @@
   }
   function setData(){
     // Set Json data in the storage
-    chrome.storage.sync.set({ "messages": data }, function(){
+    browser.storage.sync.set({ "messages": data }).then(function(){
         console.log('messages Saved');
     });
 

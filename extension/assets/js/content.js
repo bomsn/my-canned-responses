@@ -61,10 +61,23 @@ browser.runtime.onMessage.addListener(
         }
 
       } else if (domain.indexOf("github.com/") !== -1) {
-
-        textArea = document.querySelectorAll('[name="comment[body], [name="issue[body]"], [name="pull_request[body]"], [name="description"]');
+        textArea = document.querySelectorAll('[name="comment[body]"]');
         if (typeof (textArea) != 'undefined' && textArea != null && textArea != '') {
-          textArea.value = textArea.value !== '' ? textArea.value + '\n' + request.message : request.message;
+          textArea[0].value = textArea[0].value !== '' ? textArea[0].value + '\n' + request.message : request.message;
+          added = true;
+        }
+
+      } else if (domain.indexOf("upwork.com/") !== -1) {
+        textArea = document.querySelectorAll('textarea#coverLetter, textarea.msg-composer-input');
+        if (typeof (textArea) != 'undefined' && textArea != null && textArea != '') {
+          textArea[0].value = textArea[0].value !== '' ? textArea[0].value + '\n' + request.message : request.message;
+          added = true;
+        }
+
+      } else if (domain.indexOf("stackoverflow.com/") !== -1) {
+        textArea = document.querySelectorAll('textarea#wmd-input');
+        if (typeof (textArea) != 'undefined' && textArea != null && textArea != '') {
+          textArea[0].value = textArea[0].value !== '' ? textArea[0].value + '\n' + request.message : request.message;
           added = true;
         }
 

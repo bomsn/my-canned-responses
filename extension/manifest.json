@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "My Canned Responses",
-  "version": "0.3",
+  "version": "0.4",
   "author": "Ali Khallad",
   "description": "Create and manage your response templates easily.",
   "permissions": [ "storage" ],
@@ -16,7 +16,12 @@
       "matches": [
         "*://app.codeable.io/tasks/*",
         "*://outlook.live.com/mail/*",
-        "*://mail.google.com/*"
+        "*://mail.google.com/*",
+        "*://github.com/*",
+        "*://upwork.com/*",
+        "*://www.upwork.com/*",
+        "*://stackoverflow.com/*"
+        
       ],
       "js": ["assets/js/content.js"]
     }],

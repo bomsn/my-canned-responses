@@ -269,6 +269,10 @@
     if(
       hostname == 'app.codeable.io' ||
       hostname == 'mail.google.com' ||
+      hostname == 'github.com' ||
+      hostname == 'upwork.com' ||
+      hostname == 'www.upwork.com' ||
+      hostname == 'stackoverflow.com' ||
       hostname == 'outlook.live.com'
     ){
       $('.insert-response.disabled').removeClass('disabled')

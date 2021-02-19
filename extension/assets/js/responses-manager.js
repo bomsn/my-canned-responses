@@ -2,113 +2,113 @@
 (function ($) {
   // Get the data
   var data = [],
-      domain = '';
+    domain = '';
   // Assgin domain and perform related tasks
   getDomain();
   // Assign Data and perform related tasks
   getData();
 
   // Change to editor view
-  $(".add-new-message").on('click', function(event){
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      openTemplateEditor();
+  $(".add-new-message").on('click', function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    openTemplateEditor();
   });
   // Change to responses view
-  $("#discardNewTemplate").on('click', function(event){
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      closeTemplateEditor();
+  $("#discardNewTemplate").on('click', function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    closeTemplateEditor();
   });
   // Add the selected response to the comment box
-  $('.container').on('click', '.insert-response', function(event){
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
+  $('.container').on('click', '.insert-response', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
 
-      if( $(this).hasClass('disabled') ){
-        return;
-      }
-      // Small animation
-      $(this).fadeOut();
-      $(this).fadeIn();
-      // Get the message
-      let key = $(this).closest('.single-item').attr('data-key'),
-          type    = $(this).attr('data-type'),
-          message = '';
-      if( data.length > 0 ){
-        jQuery.each(data, function(index, obj) {
-          if( obj.key == key ){
-            message = obj.message;
-            return false;
-          }
-        });
-      }
+    if ($(this).hasClass('disabled')) {
+      return;
+    }
+    // Small animation
+    $(this).fadeOut();
+    $(this).fadeIn();
+    // Get the message
+    let key = $(this).closest('.single-item').attr('data-key'),
+      type = $(this).attr('data-type'),
+      message = '';
+    if (data.length > 0) {
+      jQuery.each(data, function (index, obj) {
+        if (obj.key == key) {
+          message = obj.message;
+          return false;
+        }
+      });
+    }
 
-      if( type == 'copy' ){
-        copyToClipboard( message );
-      }else{
-        // Supply the message to the page
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          var activeTab = tabs[0]
-              action = type == 'add' ? 'addReply' : type ;
-          chrome.tabs.sendMessage(activeTab.id, {"action": action, "message": message});
-        });
-      }
+    if (type == 'copy') {
+      copyToClipboard(message);
+    } else {
+      // Supply the message to the page
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        var activeTab = tabs[0]
+        action = type == 'add' ? 'addReply' : type;
+        chrome.tabs.sendMessage(activeTab.id, { "action": action, "message": message });
+      });
+    }
 
   });
 
   // Edit an existing item
-  $('.container').on('click', '#editTemplate', function(event){
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      var key = $(this).closest('.single-item').attr('data-key');
-      if( key !== undefined && key !== '' ){
-        openTemplateEditor( key );
-      }
+  $('.container').on('click', '#editTemplate', function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    var key = $(this).closest('.single-item').attr('data-key');
+    if (key !== undefined && key !== '') {
+      openTemplateEditor(key);
+    }
   });
-  $('.container').on('click', '#deleteTemplate', function(event){
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      var key = $(this).closest('.single-item').attr('data-key');
-      if( key !== undefined && key !== '' ){
-        deleteMessage( key );
-      }
+  $('.container').on('click', '#deleteTemplate', function (event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    var key = $(this).closest('.single-item').attr('data-key');
+    if (key !== undefined && key !== '') {
+      deleteMessage(key);
+    }
   });
   // Add a new response
-  $('.container').on('click', '#saveNewTemplate', function(event){
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      var title    = $('#templateTitle').val(),
-          message = $('#templateResponse').val(),
-          key      = $('form').attr('data-id');
+  $('.container').on('click', '#saveNewTemplate', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    var title = $('#templateTitle').val(),
+      message = $('#templateResponse').val(),
+      key = $('form').attr('data-id');
 
     $('#templateTitle').removeClass('is-invalid');
     $('#templateResponse').removeClass('is-invalid');
 
-    if( title !== '' && message !== '' ){
-      addMessage( title, message, key );
-    }else{
-      if( title == ''){
+    if (title !== '' && message !== '') {
+      addMessage(title, message, key);
+    } else {
+      if (title == '') {
         $('#templateTitle').addClass('is-invalid');
       }
-      if( message == ''){
+      if (message == '') {
         $('#templateResponse').addClass('is-invalid');
       }
     }
 
   });
 
-  function openTemplateEditor( key = false ){
+  function openTemplateEditor(key = false) {
 
-    if( key !== false ){
-      jQuery.each(data, function(index, obj) {
-        if( obj.key == key ){
+    if (key !== false) {
+      jQuery.each(data, function (index, obj) {
+        if (obj.key == key) {
 
-          $('form').attr( 'data-id', key );
-          $('#templateTitle').val( obj.title );
-          $('#templateResponse').val( obj.message );
+          $('form').attr('data-id', key);
+          $('#templateTitle').val(obj.title);
+          $('#templateResponse').val(obj.message);
 
         }
       });
@@ -121,7 +121,7 @@
     $('#discardNewTemplate').removeClass('hidden');
 
   }
-  function closeTemplateEditor(){
+  function closeTemplateEditor() {
     $('#existingTemplates').removeClass('hidden');
     $('#newTemplate').addClass('hidden');
 
@@ -134,7 +134,7 @@
     $('#templateResponse').removeClass('is-invalid');
   }
 
-  function addMessage( title, message, key = 0 ){
+  function addMessage(title, message, key = 0) {
 
     itemObj = {
       title: title,
@@ -142,18 +142,18 @@
       key: key,
     };
 
-    if( key.length > 1  ){
+    if (key.length > 1) {
       // If updating an existing item
-      if( data.length > 0 ){
-        jQuery.each(data, function(index, obj) {
-          if( obj.key == key ){
+      if (data.length > 0) {
+        jQuery.each(data, function (index, obj) {
+          if (obj.key == key) {
             data[index] = itemObj;
             return false;
           }
         });
       }
 
-    }else{
+    } else {
       // If adding a new item
       itemObj.key = generate_item_key(title);
       data.push(itemObj);
@@ -171,12 +171,12 @@
     // Save data
     setData();
   }
-  function deleteMessage( key ){
+  function deleteMessage(key) {
 
-    if( data.length > 0 ){
-      jQuery.each(data, function(index, obj) {
-        if( obj.key == key ){
-          data.splice(index , 1);
+    if (data.length > 0) {
+      jQuery.each(data, function (index, obj) {
+        if (obj.key == key) {
+          data.splice(index, 1);
           return false;
         }
       });
@@ -190,101 +190,101 @@
 
   function copyToClipboard(text) {
     if (window.clipboardData && window.clipboardData.setData) {
-        // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
-        return clipboardData.setData("Text", text);
+      // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+      return clipboardData.setData("Text", text);
 
     } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-        var textarea = document.createElement("textarea");
-        textarea.textContent = text;
-        textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-            return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-        }
-        catch (ex) {
-            console.warn("Copy to clipboard failed.", ex);
-            return false;
-        }
-        finally {
-            document.body.removeChild(textarea);
-        }
+      var textarea = document.createElement("textarea");
+      textarea.textContent = text;
+      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+      }
+      catch (ex) {
+        console.warn("Copy to clipboard failed.", ex);
+        return false;
+      }
+      finally {
+        document.body.removeChild(textarea);
+      }
     }
   }
 
   function generate_item_key(str) {
-      str = str.replace(/^\s+|\s+$/g, ''); // trim
-      str = str.toLowerCase();
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
 
-      // remove accents, swap ñ for n, etc
-      var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-      var to   = "aaaaeeeeiiiioooouuuunc------";
-      for (var i=0, l=from.length ; i<l ; i++) {
-          str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-      }
+    // remove accents, swap ñ for n, etc
+    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    var to = "aaaaeeeeiiiioooouuuunc------";
+    for (var i = 0, l = from.length; i < l; i++) {
+      str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
 
-      str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-          .replace(/\s+/g, '-') // collapse whitespace and replace by -
-          .replace(/-+/g, '-'); // collapse dashes
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+      .replace(/\s+/g, '-') // collapse whitespace and replace by -
+      .replace(/-+/g, '-'); // collapse dashes
 
-      return str + '-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return str + '-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
-  
-  function escapeHtml(str) { 
-    if ((str===null) || (str===''))
-          return false;
+
+  function escapeHtml(str) {
+    if ((str === null) || (str === ''))
+      return false;
     else
       str = str.toString();
-     
-     var map = {
-       '&': '&amp;',
-     '<': '&lt;',
-     '>': '&gt;',
-     '"': '&quot;',
-     "'": '&#039;'
-     };
-   
-     return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+
+    return str.replace(/[&<>"']/g, function (m) { return map[m]; });
   }
-  
-  function refreshItems(){
+
+  function refreshItems() {
     var savedMessages = $('#savedMessages'),
-        itemsContainer = $('#itemsContainer')
-        itemsBox = $('#items');
+      itemsContainer = $('#itemsContainer')
+    itemsBox = $('#items');
 
     $(itemsContainer).addClass('masked');
     $(savedMessages).empty();
 
-    if( data.length > 0 ){
+    if (data.length > 0) {
       var itemTemplate = $(itemsBox).find('.template-item').clone(),
-          itemTemplateHTML = $(itemTemplate).removeClass('template-item hidden').addClass('single-item')[0].outerHTML;
+        itemTemplateHTML = $(itemTemplate).removeClass('template-item hidden').addClass('single-item')[0].outerHTML;
 
 
-      jQuery.each(data, function(index, obj) {
-          var key      = obj.key,
-              title    = obj.title,
-              message  = escapeHtml(obj.message),
-              item     = itemTemplateHTML;
+      jQuery.each(data, function (index, obj) {
+        var key = obj.key,
+          title = obj.title,
+          message = escapeHtml(obj.message),
+          item = itemTemplateHTML;
 
-          item = item.replace("{key}", key);
-          item = item.replace("{title}", title);
-          item = item.replace("{message}", message);
+        item = item.replace("{key}", key);
+        item = item.replace("{title}", title);
+        item = item.replace("{message}", message);
 
-          $(savedMessages).append(item);
+        $(savedMessages).append(item);
       });
 
       $('#noItems').addClass('hidden');
       $(itemsBox).removeClass('hidden');
-    }else{
+    } else {
       $('#noItems').removeClass('hidden');
       $(itemsBox).addClass('hidden');
     }
 
     $(itemsContainer).removeClass('masked');
   }
-  function runDomainProcesses(){
+  function runDomainProcesses() {
     let hostname = domain.hostname;
-    if(
+    if (
       hostname == 'app.codeable.io' ||
       hostname == 'mail.google.com' ||
       hostname == 'github.com' ||
@@ -292,17 +292,17 @@
       hostname == 'www.upwork.com' ||
       hostname == 'stackoverflow.com' ||
       hostname == 'outlook.live.com'
-    ){
+    ) {
       $('.insert-response.disabled').removeClass('disabled')
     }
   }
-  function getDomain(){
+  function getDomain() {
 
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       let activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, {"action": 'getURL'}, function(location){
+      chrome.tabs.sendMessage(activeTab.id, { "action": 'getURL' }, function (location) {
         console.log(chrome.runtime.lastError);
-        if( ! chrome.runtime.lastError ) {
+        if (!chrome.runtime.lastError) {
           let url = new URL(location);
           domain = url;
           runDomainProcesses();
@@ -311,20 +311,20 @@
     });
 
   }
-  function getData(){
+  function getData() {
     // Get and assign Data from the storage
-    chrome.storage.sync.get(["messages"], function(items){
-      if( items.messages !== undefined && items.messages.length > 0 ){
+    chrome.storage.sync.get(["messages"], function (items) {
+      if (items.messages !== undefined && items.messages.length > 0) {
         data = items.messages;
       }
       // refresh items view right away with the retrived data
       refreshItems();
     });
   }
-  function setData(){
+  function setData() {
     // Set Json data in the storage
-    chrome.storage.sync.set({ "messages": data }, function(){
-        console.log('messages Saved');
+    chrome.storage.sync.set({ "messages": data }, function () {
+      console.log('messages Saved');
     });
 
   }

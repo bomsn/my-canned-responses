@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
   "name": "My Canned Responses",
-  "version": "0.4",
+  "version": "0.5",
   "author": "Ali Khallad",
-  "description": "Create and manage your response templates easily.",
+  "description": "Create and manage your canned response templates easily on Gmail, Github, Stackoverflow, Outlook, UpWork and more.",
   "permissions": [ "storage" ],
   "icons": {
     "16": "assets/icons/icon16.png",

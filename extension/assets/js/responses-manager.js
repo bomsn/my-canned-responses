@@ -229,6 +229,24 @@
 
       return str + '-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
+  
+  function escapeHtml(str) { 
+    if ((str===null) || (str===''))
+          return false;
+    else
+      str = str.toString();
+     
+     var map = {
+       '&': '&amp;',
+     '<': '&lt;',
+     '>': '&gt;',
+     '"': '&quot;',
+     "'": '&#039;'
+     };
+   
+     return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+  
   function refreshItems(){
     var savedMessages = $('#savedMessages'),
         itemsContainer = $('#itemsContainer')
@@ -245,7 +263,7 @@
       jQuery.each(data, function(index, obj) {
           var key      = obj.key,
               title    = obj.title,
-              message  = obj.message,
+              message  = escapeHtml(obj.message),
               item     = itemTemplateHTML;
 
           item = item.replace("{key}", key);
